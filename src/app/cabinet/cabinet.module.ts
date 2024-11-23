@@ -21,6 +21,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { QuillModule } from 'ngx-quill';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MainComponent } from './components/main/main.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { SubCategoriesComponent } from './components/sub-categories/sub-categories.component';
+import { CartsComponent } from './components/carts/carts.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { ProductsComponent } from './components/products/products.component';
+import { TablesComponent } from './components/tables/tables.component';
+import { UsersComponent } from './components/users/users.component';
+import { DividerModule } from 'primeng/divider';
+
 @NgModule({
   declarations: [
     CabinetComponent,
@@ -30,6 +39,13 @@ import { MainComponent } from './components/main/main.component';
     TableTogglableColumnsComponent,
     TableMenuDialogComponent,
     MainComponent,
+    CategoriesComponent,
+    SubCategoriesComponent,
+    CartsComponent,
+    OrdersComponent,
+    ProductsComponent,
+    TablesComponent,
+    UsersComponent
   ],
   imports: [
     CommonModule,
@@ -47,6 +63,7 @@ import { MainComponent } from './components/main/main.component';
     MessagesModule,
     ToastModule,
     QuillModule.forRoot(),
+    DividerModule
   ],
   providers: [MessageService, ConfirmationService],
 })

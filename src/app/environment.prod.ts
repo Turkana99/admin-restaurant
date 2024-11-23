@@ -1,19 +1,16 @@
-const apiUrl = 'https://api.integrolaw.az/api/v1';
+const apiUrl = 'http://188.245.226.20:8080/api/v1'; 
 
 export const environment = {
   production: true,
   loginUrl: `${apiUrl}/Auth/Login`,
   resetPass: `${apiUrl}/Auth/ResetPassword`,
-  blogs: `${apiUrl}/Blogs`,
-  blogAttachment: `${apiUrl}/Blogs/DeleteAttachment`,
-  contacts: `${apiUrl}/Contacts`,
-  employees: `${apiUrl}/Employees`,
-  homePages: `${apiUrl}/HomePages`,
-  pageSettings: `${apiUrl}/PageSettings`,
-  pageSettingsType: `${apiUrl}/PageSettings/getPageTypes`,
-  feedbacks: `${apiUrl}/FeedbackAndSuggestions`,
-  partners: `${apiUrl}/Partners`,
-  services: `${apiUrl}/Services`,
-  about: `${apiUrl}/Abouts`,
-  evaluate: `${apiUrl}/CaseEvaluations`,
+  
+  cart: `${apiUrl}/Carts`,
+  category: `${apiUrl}/Categories`,
+  diningTables: `${apiUrl}/DiningTables`,
+  languages: `${apiUrl}/Languages`,
+  order: `${apiUrl}/Orders`,
+  product: `${apiUrl}/Products`,
+  subCategory: `${apiUrl}/SubCategories`,
+  users: `${apiUrl}/Users`,
 };

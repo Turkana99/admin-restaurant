@@ -12,7 +12,6 @@ export class CategoriesService {
     const params = new HttpParams()
       .set('PageSize', pageSize.toString())
       .set('PageIndex', pageIndex.toString());
-
     return this.http.get<any>(environment.category, { params });
   }
 

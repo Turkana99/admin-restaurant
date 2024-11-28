@@ -32,7 +32,7 @@ export class CategoriesComponent {
   }
   getAllInfo(pageIndex: number, pageSize: number) {
     this.categoryService
-      .getCategories(pageIndex, pageSize+1)
+      .getCategories(pageIndex, pageSize + 1)
       .pipe(
         finalize(() => {
           setTimeout(() => {
@@ -50,7 +50,6 @@ export class CategoriesComponent {
         }
       );
   }
-  
 
   onPageChange($event: any) {
     this.getAllInfo($event.pageSize, $event.pageIndex);

@@ -56,6 +56,13 @@ export class CategoriesComponent {
   }
 
   editCategoryPageInfo(id: any) {
-    this.router.navigate(['/new-about', id]);
+    this.router.navigate(['/new-category', id]);
+  }
+
+  deleteCat($event: any) {
+    this.categoryService.deleteCategory($event.id).subscribe(() => {
+      this.getAllInfo(this.pageSize, this.pageIndex);
+      location.reload();
+    });
   }
 }

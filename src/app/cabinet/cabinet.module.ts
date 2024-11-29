@@ -29,6 +29,8 @@ import { ProductsComponent } from './components/products/products.component';
 import { TablesComponent } from './components/tables/tables.component';
 import { UsersComponent } from './components/users/users.component';
 import { DividerModule } from 'primeng/divider';
+import { NewCategoryComponent } from './components/add-edit-components/new-category/new-category.component';
+import { NewSubCategoryComponent } from './components/add-edit-components/new-sub-category/new-sub-category.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { DividerModule } from 'primeng/divider';
     OrdersComponent,
     ProductsComponent,
     TablesComponent,
-    UsersComponent
+    UsersComponent,
+    NewCategoryComponent,
+    NewSubCategoryComponent
   ],
   imports: [
     CommonModule,

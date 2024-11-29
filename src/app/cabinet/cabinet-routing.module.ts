@@ -9,6 +9,7 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { ProductsComponent } from './components/products/products.component';
 import { TablesComponent } from './components/tables/tables.component';
 import { UsersComponent } from './components/users/users.component';
+import { NewCategoryComponent } from './components/add-edit-components/new-category/new-category.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,14 @@ const routes: Routes = [
       {
         path: 'categories',
         component: CategoriesComponent,
+      },
+      {
+        path: 'new-category',
+        component: NewCategoryComponent,
+      },
+      {
+        path: 'new-category/:id',
+        component: NewCategoryComponent,
       },
       {
         path: 'sub-categories',

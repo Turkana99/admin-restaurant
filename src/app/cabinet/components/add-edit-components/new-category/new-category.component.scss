@@ -1,0 +1,33 @@
+@import "../../../../../styles/variables.scss";
+
+.new-category {
+  .title {
+    h1 {
+      font-family: "Poppins", sans-serif !important;
+      font-size: 40px;
+      font-weight: bold;
+      color: $main-color;
+    }
+    ::ng-deep .p-button {
+      border-radius: 8px;
+      background-color: $mainInt-color;
+      border: none;
+    }
+  }
+  ::ng-deep .p-button {
+    border-radius: 8px;
+    background-color: $new-color;
+    font-family: "Poppins", sans-serif !important;
+    border: none;
+    font-weight: 400!important;
+  }
+
+  label {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 16px !important;
+    padding: 5px 0px;
+  }
+  .bgImg {
+    background-color: $main-color;
+  }
+}

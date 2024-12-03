@@ -1,9 +1,9 @@
 import {
-  NG_VALUE_ACCESSOR
-} from "./chunk-CBXG6Y3O.js";
-import {
   SelectionModel
 } from "./chunk-HWTLC32O.js";
+import {
+  NG_VALUE_ACCESSOR
+} from "./chunk-CBXG6Y3O.js";
 import {
   DOWN_ARROW,
   Directionality,
@@ -70,8 +70,8 @@ import {
   ɵɵtemplate,
   ɵɵviewQuery
 } from "./chunk-5JVZH6AF.js";
-import "./chunk-5OPE3T2R.js";
 import "./chunk-4N4GOYJH.js";
+import "./chunk-5OPE3T2R.js";
 import "./chunk-FHTVLBLO.js";
 import "./chunk-4MWRP73S.js";
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, Validators, FormGroup } from '@angular/forms';
 import { CategoriesService } from '../../../../core/services/categories.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { LangService } from '../../../../core/services/lang.service';
   templateUrl: './new-category.component.html',
   styleUrls: ['./new-category.component.scss'],
 })
-export class NewCategoryComponent {
+export class NewCategoryComponent implements OnInit {
   newCatForm!: FormGroup;
   showSpinner = false;
   buttonSpinner = false;
@@ -18,6 +18,7 @@ export class NewCategoryComponent {
   pageTitle = 'Yeni kateqoriya məlumatı';
   submitButtonText = 'Əlavə et';
   languages: any[] = [];
+  subCategries: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -41,11 +42,10 @@ export class NewCategoryComponent {
     });
   }
 
-  // Fetch languages using LangService and initialize the form
   loadLanguages() {
     this.langService.getLangs().subscribe(
       (response) => {
-        this.languages = response.items;
+        this.languages = response.items || [];
         this.initLangControls();
       },
       (error) => {
@@ -54,30 +54,37 @@ export class NewCategoryComponent {
     );
   }
 
-  // Initialize the base form structure
   initForm() {
     this.newCatForm = this.fb.group({
       categoryLangs: this.fb.array([]),
     });
   }
 
-  // Add controls for each language
   initLangControls() {
-    const langControls = this.languages.map((lang) => {
-      return this.fb.group({
-        name: this.fb.control('', [Validators.required]),
-        languageId: this.fb.control(lang.id),
-      });
-    });
+    const langControls = this.languages.map((lang) =>
+      this.fb.group({
+        ownerId: [null],
+        name: ['', Validators.required],
+        languageId: [lang.id],
+      })
+    );
     this.newCatForm.setControl('categoryLangs', this.fb.array(langControls));
   }
 
-  // Helper to access form array
   get categoryLangs(): FormArray {
     return this.newCatForm.get('categoryLangs') as FormArray;
   }
 
-  // Fetch existing category data
+  getAllCat(pageIndex: number, pageSize: number) {
+    this.categoryService
+      .getCategories(pageIndex, pageSize + 1)
+      .pipe(finalize(() => (this.showSpinner = false)))
+      .subscribe(
+        (response) => (this.subCategries = response.items),
+        (error) => console.error('Error fetching subcategories:', error)
+      );
+  }
+
   getCatPageInfoWithId(id: number) {
     this.showSpinner = true;
     this.categoryService
@@ -85,31 +92,23 @@ export class NewCategoryComponent {
       .pipe(finalize(() => (this.showSpinner = false)))
       .subscribe(
         (response) => {
-          console.log('API Response:', response);
           const langData = response.categoryLangs || [];
-          if (langData.length > 0) {
-            this.categoryLangs.clear();
-            langData.forEach((lang: any) => {
-              console.log('Lang data:', lang);
-              this.categoryLangs.push(
-                this.fb.group({
-                  name: [lang.name || '', Validators.required],
-                  languageId: [lang.languageId],
-                })
-              );
-            });
-          }
+          this.categoryLangs.clear();
+          langData.forEach((lang: any) => {
+            this.categoryLangs.push(
+              this.fb.group({
+                ownerId: [lang.ownerId || null],
+                name: [lang.name || '', Validators.required],
+                languageId: [lang.languageId],
+              })
+            );
+          });
         },
-        (error) => {
-          console.error('Error fetching category data:', error);
-        }
+        (error) => console.error('Error fetching category data:', error)
       );
   }
 
-  // Submit form data
   submit() {
-    console.log('Form Data:', this.newCatForm.value);
-
     if (this.newCatForm.invalid) {
       console.error('Form is invalid');
       return;
@@ -124,7 +123,6 @@ export class NewCategoryComponent {
     }
   }
 
-  // Update category
   updateCategory(formData: any) {
     this.buttonSpinner = true;
     this.categoryService
@@ -135,13 +133,10 @@ export class NewCategoryComponent {
           this.newCatForm.reset();
           this.router.navigate(['/categories']);
         },
-        (error) => {
-          console.error('Error updating category:', error);
-        }
+        (error) => console.error('Error updating category:', error)
       );
   }
 
-  // Create new category
   createCategory(formData: any) {
     this.buttonSpinner = true;
     this.categoryService
@@ -152,9 +147,8 @@ export class NewCategoryComponent {
           this.newCatForm.reset();
           this.router.navigate(['/categories']);
         },
-        (error) => {
-          console.error('Error creating category:', error);
-        }
+        (error) => console.error('Error creating category:', error)
       );
   }
 }
+

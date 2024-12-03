@@ -5,37 +5,62 @@
     <div class="w-100 p-0 m-0 tab-content">
       <form [formGroup]="newCatForm">
         <p-tabView class="p-0 m-0">
-          <ng-container *ngFor="let lang of categoryLangs.controls; let i = index">
-            <p-tabPanel [header]="languages[i]?.displayName" class="p-0 m-0">
-              <div class="form-group">
-                <div class="py-2">
-                  <label for="Title">Kateqoriya</label>
-                  <input
-                    type="text"
-                    pInputText
-                    class="w-100"
-                    [formControlName]="'name'" 
-                  />
+          <ng-container *ngIf="categoryLangs.controls?.length">
+            <ng-container *ngFor="let lang of categoryLangs?.controls; let i = index">
+              <p-tabPanel [header]="languages[i]?.displayName" class="p-0 m-0">
+                <div class="form-group">
+                  <!-- SubCategory -->
+                  <div class="pb-2">
+                    <label for="name" class="pb-1">Alt kateqoriya*</label>
+                    <div class="flex justify-content-center">
+                      <p-dropdown
+                        [options]="subCategries"
+                        optionLabel="name"
+                        optionValue="id"
+                        formControlName="ownerId"
+                        placeholder="Alt kateqoriya seçin"
+                        emptyFilterMessage="Məlumat tapılmadı"
+                        [filter]="true"
+                        filterBy="value"
+                        [showClear]="true"
+                        [autoZIndex]="true"
+                        [baseZIndex]="1000"
+                        appendTo="body"
+                        [virtualScroll]="true"
+                        [virtualScrollItemSize]="46"
+                      ></p-dropdown>
+                    </div>
+                  </div>
+                  <!-- Category Name -->
+                  <div class="py-2">
+                    <label for="Title">Kateqoriya</label>
+                    <input
+                      type="text"
+                      pInputText
+                      class="w-100"
+                      [formControlName]="'name'"
+                    />
+                  </div>
+                  <!-- Required message -->
+                  <div
+                    class="validationMessage"
+                    *ngIf="
+                      categoryLangs.at(i).get('name')?.errors?.['required'] &&
+                      categoryLangs.at(i).get('name')?.touched
+                    "
+                  >
+                    <p class="p-0 m-0">*Xana boş ola bilməz.</p>
+                  </div>
                 </div>
-                <!-- Required message -->
-                <div
-                  class="validationMessage"
-                  *ngIf="categoryLangs.at(i).get('name')?.errors?.['required'] &&
-                        categoryLangs.at(i).get('name')?.touched"
-                >
-                  <p class="p-0 m-0">*Xana boş ola bilməz.</p>
-                </div>
-              </div>
-            </p-tabPanel>
+              </p-tabPanel>
+            </ng-container>
           </ng-container>
         </p-tabView>
         <div class="d-flex justify-content-end pt-4">
-          <p-button
-            [label]="submitButtonText"
-            (onClick)="submit()"
-          ></p-button>
+          <p-button [label]="submitButtonText" (onClick)="submit()"></p-button>
         </div>
       </form>
     </div>
   </div>
+  
   

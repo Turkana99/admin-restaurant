@@ -15,6 +15,9 @@ import {
   ViewportRuler
 } from "./chunk-2ITKVS4M.js";
 import {
+  SelectionModel
+} from "./chunk-HWTLC32O.js";
+import {
   animate,
   animateChild,
   query,
@@ -29,9 +32,6 @@ import {
   NgForm,
   Validators
 } from "./chunk-CBXG6Y3O.js";
-import {
-  SelectionModel
-} from "./chunk-HWTLC32O.js";
 import {
   A,
   ActiveDescendantKeyManager,
@@ -1515,4 +1515,4 @@ export {
   MatSelectTrigger,
   MatSelectModule
 };
-//# sourceMappingURL=chunk-7KFSCUVG.js.map
+//# sourceMappingURL=chunk-ZESKE7M7.js.map

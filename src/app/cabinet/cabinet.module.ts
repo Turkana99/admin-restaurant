@@ -30,6 +30,9 @@ import { UsersComponent } from './components/users/users.component';
 import { DividerModule } from 'primeng/divider';
 import { NewCategoryComponent } from './components/add-edit-components/new-category/new-category.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { NewProductComponent } from './components/add-edit-components/new-product/new-product.component';
+import { NewTableComponent } from './components/add-edit-components/new-table/new-table.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,8 @@ import { DropdownModule } from 'primeng/dropdown';
     TablesComponent,
     UsersComponent,
     NewCategoryComponent,
+    NewProductComponent,
+    NewTableComponent,
   ],
   imports: [
     CommonModule,
@@ -65,7 +70,8 @@ import { DropdownModule } from 'primeng/dropdown';
     ToastModule,
     QuillModule.forRoot(),
     DividerModule,
-    DropdownModule
+    DropdownModule,
+    TabMenuModule,
   ],
   providers: [MessageService, ConfirmationService],
 })

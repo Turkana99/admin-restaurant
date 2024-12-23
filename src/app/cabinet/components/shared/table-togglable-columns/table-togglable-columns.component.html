@@ -98,6 +98,7 @@
   <mat-paginator
     [pageSizeOptions]="pageSizeOptions"
     showFirstLastButtons
+    (page)="onPageChange($event)"
   ></mat-paginator>
   }
 </div>

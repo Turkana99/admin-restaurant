@@ -8,26 +8,30 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class OrdersService {
   constructor(private http: HttpClient) {}
-  getOrders(pageSize: number, pageIndex: number): Observable<any> {
+  getAll(pageSize: number, pageIndex: number): Observable<any> {
     const params = new HttpParams()
       .set('PageSize', pageSize.toString())
       .set('PageIndex', pageIndex.toString());
     return this.http.get<any>(environment.order, { params });
   }
 
-  addOrder(request: any): Observable<any> {
+  getLookup(): Observable<any> {
+    return this.http.get<any>(environment.order);
+  }
+
+  add(request: any): Observable<any> {
     return this.http.post<any>(environment.order, request);
   }
 
-  editOrder(request: any): Observable<any> {
+  edit(request: any): Observable<any> {
     return this.http.put<any>(environment.order, request);
   }
 
-  getOrderWithId(id: number) {
+  getById(id: number) {
     return this.http.get<any>(`${environment.order}/${id}`);
   }
 
-  deleteOrder(id: number) {
+  delete(id: number) {
     return this.http.delete<any>(`${environment.order}/${id}`);
   }
 

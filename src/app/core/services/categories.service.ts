@@ -8,26 +8,31 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class CategoriesService {
   constructor(private http: HttpClient) {}
-  getCategories(pageSize: number, pageIndex: number): Observable<any> {
+
+  getAll(pageSize: number, pageIndex: number): Observable<any> {
     const params = new HttpParams()
       .set('PageSize', pageSize.toString())
       .set('PageIndex', pageIndex.toString());
     return this.http.get<any>(environment.category, { params });
   }
 
-  addCategory(request: any): Observable<any> {
+  getLookup(): Observable<any> {
+    return this.http.get<any>(environment.category);
+  }
+
+  add(request: any): Observable<any> {
     return this.http.post<any>(environment.category, request);
   }
 
-  editCategory(request: any): Observable<any> {
+  edit(request: any): Observable<any> {
     return this.http.put<any>(environment.category, request);
   }
 
-  getCategoryWithId(id: number) {
+  getById(id: number) {
     return this.http.get<any>(`${environment.category}/${id}`);
   }
 
-  deleteCategory(id: number) {
+  delete(id: number) {
     return this.http.delete<any>(`${environment.category}/${id}`);
   }
 

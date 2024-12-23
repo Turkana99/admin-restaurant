@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { OrdersService } from '../../../core/services/orders.service';
+import { CategoriesService } from '../../../core/services/categories.service';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
-import { finalize } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
+import { OrdersService } from '../../../core/services/orders.service';
 
 @Component({
   selector: 'app-orders',
@@ -10,16 +11,22 @@ import { finalize } from 'rxjs';
   styleUrl: './orders.component.scss',
 })
 export class OrdersComponent {
-  orders: any;
-  showSpinner = false;
-  pageSize = 10;
-  pageIndex = 0;
-
   constructor(
-    private orderService: OrdersService,
+    private dataService: OrdersService,
     private router: Router,
-    private messageService: MessageService
   ) {}
+
+  rows!: any[];
+
+  private _defaultPage: PageEvent = {
+    previousPageIndex: 0,
+    pageIndex: 0,
+    pageSize: 10,
+    length: 0,
+  };
+
+  data$!: Observable<any>;
+  page$ = new BehaviorSubject<PageEvent>(this._defaultPage);
 
   displayedColumns: any[] = [
     {
@@ -27,35 +34,36 @@ export class OrdersComponent {
       name: 'Kateqoriya',
     },
   ];
+
   ngOnInit(): void {
-    this.getAllInfo(this.pageSize, this.pageIndex);
-  }
-  getAllInfo(pageIndex: number, pageSize: number) {
-    this.orderService
-      .getOrders(pageIndex, pageSize + 1)
-      .pipe(
-        finalize(() => {
-          setTimeout(() => {
-            this.showSpinner = false;
-          }, 200);
-        })
+    this.data$ = this.page$.pipe(
+      switchMap((pageEvent) =>
+        this.dataService.getAll(pageEvent.pageIndex, pageEvent.pageSize).pipe(
+          tap((response) => {
+            this.rows = response.items;
+          })
+        )
       )
-      .subscribe(
-        (response) => {
-          this.orders = response.items;
-          console.log('categories', this.orders);
-        },
-        (error) => {
-          console.error('Error fetching data:', error);
-        }
-      );
+    );
   }
 
-  onPageChange($event: any) {
-    this.getAllInfo($event.pageSize, $event.pageIndex);
+  onPageChange($event: PageEvent) {
+    this.page$.next($event);
   }
 
-  editOrdersPageInfo(id: any) {
-    this.router.navigate(['/new-about', id]);
+  editEntity(id: any) {
+    this.router.navigate(['/new-category', id]);
+  }
+
+  deleteEntity(id: number) {
+    this.dataService.delete(id).subscribe({
+      complete: () => {
+        this.reload();
+      },
+    });
+  }
+
+  reload() {
+    this.page$.next(this._defaultPage);
   }
 }

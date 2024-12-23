@@ -9,6 +9,8 @@ import { ProductsComponent } from './components/products/products.component';
 import { TablesComponent } from './components/tables/tables.component';
 import { UsersComponent } from './components/users/users.component';
 import { NewCategoryComponent } from './components/add-edit-components/new-category/new-category.component';
+import { NewProductComponent } from './components/add-edit-components/new-product/new-product.component';
+import { NewTableComponent } from './components/add-edit-components/new-table/new-table.component';
 
 const routes: Routes = [
   {
@@ -45,8 +47,24 @@ const routes: Routes = [
         component: ProductsComponent,
       },
       {
+        path: 'new-product',
+        component: NewProductComponent,
+      },
+      {
+        path: 'new-product/:id',
+        component: NewProductComponent,
+      },
+      {
         path: 'tables',
         component: TablesComponent,
+      },
+      {
+        path: 'new-table',
+        component: NewTableComponent,
+      },
+      {
+        path: 'new-table/:id',
+        component: NewTableComponent,
       },
       {
         path: 'users',

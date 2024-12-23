@@ -1,25 +1,26 @@
-<div class="products">
-    <div class="title d-flex justify-content-between align-items-center pt-4">
-      <div><h1>Yeməklər</h1></div>
-      <div>
-        <button routerLink="/new-about" class="add-btn px-4 py-2 me-4">Əlavə et</button>
-      </div>
-    </div>
-    <div class="data_table">
-      @if (products && products.length) {
-        <!--Data table-->
-        <table-togglable-columns
-          [dataSource]="products"
-          [columnWidth]="'0 0 50%'"
-          [displayedColumns]="displayedColumns"
-          [paginator]="true"
-          [editButton]="true"
-          editButtonText="düzəliş et"
-          [deleteButton]="false"
-          deleteButtonText="sil"
-          (onEdit)="editproductsPageInfo($event.id)"
-        ></table-togglable-columns>
-        }
+<div class="component-wrapper">
+  <div class="title d-flex justify-content-between align-items-center pt-4">
+    <div><h1>Yeməklər</h1></div>
+    <div>
+      <button routerLink="/new-product" class="add-btn px-4 py-2 me-4">
+        Əlavə et
+      </button>
     </div>
   </div>
-  
+  <div class="data_table">
+    <table-togglable-columns
+      *ngIf="data$ | async"
+      [dataSource]="rows"
+      [columnWidth]="'0 0 50%'"
+      [displayedColumns]="displayedColumns"
+      [paginator]="true"
+      [editButton]="true"
+      editButtonText="düzəliş et"
+      [deleteButton]="true"
+      deleteButtonText="sil"
+      (onEdit)="editEntity($event.id)"
+      (onDelete)="deleteEntity($event.id)"
+      (onPage)="onPageChange($event)"
+    ></table-togglable-columns>
+  </div>
+</div>

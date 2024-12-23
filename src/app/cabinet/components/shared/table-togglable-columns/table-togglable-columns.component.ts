@@ -19,7 +19,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatInput } from '@angular/material/input';
@@ -68,6 +68,7 @@ export class TableTogglableColumnsComponent
   @Output() onEdit = new EventEmitter<any>();
   @Output() onDelete = new EventEmitter<any>();
   @Output() onDetail = new EventEmitter<any>();
+  @Output() onPage = new EventEmitter<any>();
 
   @ViewChild(MatPaginator) private _paginator!: MatPaginator;
   @ViewChild(MatSort) private _sort!: MatSort;
@@ -202,5 +203,9 @@ export class TableTogglableColumnsComponent
     }
 
     this.dataSource2.data = filteredCollection;
+  }
+
+  onPageChange(event: PageEvent) {
+    this.onPage.emit(event);
   }
 }

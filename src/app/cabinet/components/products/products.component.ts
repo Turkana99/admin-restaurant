@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { ProductsService } from '../../../core/services/products.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { finalize } from 'rxjs';
+import { BehaviorSubject, finalize, Observable, switchMap, tap } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrl: './products.component.scss'
+  styleUrl: './products.component.scss',
 })
 export class ProductsComponent {
   products: any;
@@ -15,11 +16,19 @@ export class ProductsComponent {
   pageSize = 10;
   pageIndex = 0;
 
-  constructor(
-    private productService: ProductsService,
-    private router: Router,
-    private messageService: MessageService
-  ) {}
+  constructor(private dataService: ProductsService, private router: Router) {}
+
+  rows: any;
+
+  private _defaultPage: PageEvent = {
+    previousPageIndex: 0,
+    pageIndex: 0,
+    pageSize: 10,
+    length: 0,
+  };
+
+  data$!: Observable<any>;
+  page$ = new BehaviorSubject<PageEvent>(this._defaultPage);
 
   displayedColumns: any[] = [
     {
@@ -27,36 +36,36 @@ export class ProductsComponent {
       name: 'Kateqoriya',
     },
   ];
+
   ngOnInit(): void {
-    this.getAllInfo(this.pageSize, this.pageIndex);
-  }
-  getAllInfo(pageIndex: number, pageSize: number) {
-    this.productService
-      .getProducts(pageIndex, pageSize+1)
-      .pipe(
-        finalize(() => {
-          setTimeout(() => {
-            this.showSpinner = false;
-          }, 200);
-        })
+    this.data$ = this.page$.pipe(
+      switchMap((pageEvent) =>
+        this.dataService.getAll(pageEvent.pageIndex, pageEvent.pageSize).pipe(
+          tap((response) => {
+            this.rows = response.items;
+          })
+        )
       )
-      .subscribe(
-        (response) => {
-          this.products = response.items;
-          console.log('products', this.products);
-        },
-        (error) => {
-          console.error('Error fetching data:', error);
-        }
-      );
-  }
-  
-
-  onPageChange($event: any) {
-    this.getAllInfo($event.pageSize, $event.pageIndex);
+    );
   }
 
-  editproductsPageInfo(id: any) {
-    this.router.navigate(['/new-about', id]);
+  onPageChange($event: PageEvent) {
+    this.page$.next($event);
+  }
+
+  editEntity(id: any) {
+    this.router.navigate(['/new-product', id]);
+  }
+
+  deleteEntity(id: number) {
+    this.dataService.delete(id).subscribe({
+      complete: () => {
+        this.reload();
+      },
+    });
+  }
+
+  reload() {
+    this.page$.next(this._defaultPage);
   }
 }

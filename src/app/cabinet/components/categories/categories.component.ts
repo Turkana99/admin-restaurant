@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CategoriesService } from '../../../core/services/categories.service';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
-import { finalize } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-categories',
@@ -10,16 +10,19 @@ import { finalize } from 'rxjs';
   styleUrl: './categories.component.scss',
 })
 export class CategoriesComponent {
-  categories: any;
-  showSpinner = false;
-  pageSize = 10;
-  pageIndex = 0;
+  constructor(private dataService: CategoriesService, private router: Router) {}
 
-  constructor(
-    private categoryService: CategoriesService,
-    private router: Router,
-    private messageService: MessageService
-  ) {}
+  rows!: any[];
+
+  private _defaultPage: PageEvent = {
+    previousPageIndex: 0,
+    pageIndex: 0,
+    pageSize: 10,
+    length: 0,
+  };
+
+  data$!: Observable<any>;
+  page$ = new BehaviorSubject<PageEvent>(this._defaultPage);
 
   displayedColumns: any[] = [
     {
@@ -27,42 +30,36 @@ export class CategoriesComponent {
       name: 'Kateqoriya',
     },
   ];
+
   ngOnInit(): void {
-    this.getAllInfo(this.pageSize, this.pageIndex);
-  }
-  getAllInfo(pageIndex: number, pageSize: number) {
-    this.categoryService
-      .getCategories(pageIndex, pageSize + 1)
-      .pipe(
-        finalize(() => {
-          setTimeout(() => {
-            this.showSpinner = false;
-          }, 200);
-        })
+    this.data$ = this.page$.pipe(
+      switchMap((pageEvent) =>
+        this.dataService.getAll(pageEvent.pageIndex, pageEvent.pageSize).pipe(
+          tap((response) => {
+            this.rows = response.items;
+          })
+        )
       )
-      .subscribe(
-        (response) => {
-          this.categories = response.items;
-          console.log('categories', this.categories);
-        },
-        (error) => {
-          console.error('Error fetching data:', error);
-        }
-      );
+    );
   }
 
-  onPageChange($event: any) {
-    this.getAllInfo($event.pageSize, $event.pageIndex);
+  onPageChange($event: PageEvent) {
+    this.page$.next($event);
   }
 
-  editCategoryPageInfo(id: any) {
+  editEntity(id: any) {
     this.router.navigate(['/new-category', id]);
   }
 
-  deleteCat($event: any) {
-    this.categoryService.deleteCategory($event.id).subscribe(() => {
-      this.getAllInfo(this.pageSize, this.pageIndex);
-      location.reload();
+  deleteEntity(id: number) {
+    this.dataService.delete(id).subscribe({
+      complete: () => {
+        this.reload();
+      },
     });
+  }
+
+  reload() {
+    this.page$.next(this._defaultPage);
   }
 }

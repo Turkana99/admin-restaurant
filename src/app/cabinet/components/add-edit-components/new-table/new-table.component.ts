@@ -1,27 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { CategoriesService } from '../../../../core/services/categories.service';
 import { ActivatedRoute } from '@angular/router';
 import { LangService } from '../../../../core/services/lang.service';
 import { forkJoin, Observable, tap } from 'rxjs';
+import { TablesService } from '../../../../core/services/tables.service';
 
 @Component({
-  selector: 'app-new-category',
-  templateUrl: './new-category.component.html',
-  styleUrls: ['./new-category.component.scss'],
+  selector: 'app-new-table',
+  templateUrl: './new-table.component.html',
+  styleUrl: './new-table.component.scss',
 })
-export class NewCategoryComponent implements OnInit {
+export class NewTableComponent {
   entityId: any;
   languages: any[] = [];
 
   data$ = new Observable<any>();
 
   form: any;
-  allCategories: any[] = [];
+  allEntities: any[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private dataService: CategoriesService,
+    private dataService: TablesService,
     private langService: LangService,
     private route: ActivatedRoute
   ) {
@@ -29,7 +29,7 @@ export class NewCategoryComponent implements OnInit {
   }
 
   get f() {
-    return this.form.get('categoryLangs');
+    return this.form.get('tableLangs');
   }
 
   ngOnInit(): void {
@@ -44,13 +44,12 @@ export class NewCategoryComponent implements OnInit {
         this.languages = langs.items;
 
         this.form = this.fb.group({
-          ownerId: null,
-          categoryLangs: this.fb.array(
+          tableLangs: this.fb.array(
             this.languages.map((el: any, index: number) => {
               return this.fb.group({
                 name: [
                   entity
-                    ? entity.categoryLanguages.find(
+                    ? entity.diningTableLanguages.find(
                         (x: any) => x.languageId == el.id
                       )?.name
                     : '',
@@ -61,7 +60,7 @@ export class NewCategoryComponent implements OnInit {
             })
           ),
         });
-        this.allCategories = allEntities.items;
+        this.allEntities = allEntities.items;
       })
     );
   }

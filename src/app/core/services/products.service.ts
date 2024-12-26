@@ -34,4 +34,10 @@ export class ProductsService {
   delete(id: number) {
     return this.http.delete<any>(`${environment.product}/${id}`);
   }
+
+  deleteAttachment(id: number) {
+    return this.http.delete<any>(
+      `${environment.product}/delete-product-attachment/${id}`
+    );
+  }
 }

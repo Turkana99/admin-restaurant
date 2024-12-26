@@ -14,6 +14,8 @@ import { ProductsService } from '../../../../core/services/products.service';
 export class NewProductComponent {
   entityId: any;
   languages: any[] = [];
+  CoverImage!: any;
+  Attachments!: any[];
 
   data$ = new Observable<any>();
 
@@ -78,11 +80,14 @@ export class NewProductComponent {
           ),
           Price: [entity ? entity.price : '', Validators.required],
           CategoryId: [entity ? entity.categoryId : null, Validators.required],
-          CoverImage: [null, Validators.required],
-          Attachments: [null, Validators.required],
+          CoverImage: [null],
+          Attachments: [null],
         });
         this.allEntities = allEntities.items;
         this.allCategories = allCategories.items;
+
+        this.CoverImage = entity?.coverImage;
+        this.Attachments = entity?.productAttachments;
       })
     );
   }
@@ -130,5 +135,17 @@ export class NewProductComponent {
         console.log('response', response);
       });
     }
+  }
+
+  getImageUrl(url: string) {
+    return `url(${encodeURI(url)})`;
+  }
+
+  deleteAttachment(id: number) {
+    this.dataService.deleteAttachment(id).subscribe(() => {
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+    });
   }
 }

@@ -86,13 +86,6 @@
           formControlName="CoverImage"
           (change)="onSelectCoverImage($event)"
         />
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          id="inputGroupFileAddon04"
-        >
-          Button
-        </button>
       </div>
       <p
         class="invalid-message"
@@ -100,6 +93,13 @@
       >
         Bu xana boş ola bilməz
       </p>
+    </div>
+
+    <div class="mb-3 d-flex flex-wrap" *ngIf="CoverImage">
+      <div
+        class="attachment-wrapper"
+        [ngStyle]="{ 'background-image': getImageUrl(CoverImage) }"
+      ></div>
     </div>
 
     <div class="mb-3">
@@ -116,13 +116,6 @@
           accept="image/*"
           (change)="onSelectAttachments($event)"
         />
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          id="inputGroupFileAddon04"
-        >
-          Button
-        </button>
       </div>
 
       <p
@@ -133,6 +126,18 @@
       >
         Bu xana boş ola bilməz
       </p>
+    </div>
+
+    <div class="mb-3 d-flex flex-wrap" *ngIf="Attachments?.length">
+      <div
+        class="attachment-wrapper"
+        *ngFor="let attachment of Attachments"
+        [ngStyle]="{ 'background-image': getImageUrl(attachment.filePath) }"
+      >
+        <button (click)="deleteAttachment(attachment.id)" type="button">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
     </div>
 
     <button

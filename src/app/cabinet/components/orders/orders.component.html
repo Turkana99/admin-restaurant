@@ -6,12 +6,9 @@
     <table-togglable-columns
       *ngIf="data$ | async"
       [dataSource]="rows"
-      [columnWidth]="'0 0 50%'"
       [displayedColumns]="displayedColumns"
       [paginator]="true"
-      [editButton]="true"
       editButtonText="düzəliş et"
-      [deleteButton]="true"
       deleteButtonText="sil"
       (onEdit)="editEntity($event.id)"
       (onDelete)="deleteEntity($event.id)"

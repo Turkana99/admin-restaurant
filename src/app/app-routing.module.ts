@@ -7,20 +7,14 @@ import { LoginComponent } from './auth/components/login/login.component';
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'login',
-  },
-  { path: 'login', component: LoginComponent },
-  {
-    path: '',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: '',
     loadChildren: () =>
       import('./cabinet/cabinet.module').then((m) => m.CabinetModule),
-    // canActivate: [CabinetGuard],
+    canActivate: [CabinetGuard],
   },
 ];
 

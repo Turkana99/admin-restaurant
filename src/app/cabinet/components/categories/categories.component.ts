@@ -28,6 +28,7 @@ export class CategoriesComponent {
     {
       key: 'name',
       name: 'Kateqoriya',
+      width: '80',
     },
   ];
 

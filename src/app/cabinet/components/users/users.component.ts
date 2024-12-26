@@ -68,7 +68,7 @@ export class UsersComponent {
   }
 
   editEntity(id: any) {
-    this.router.navigate(['/new-category', id]);
+    this.router.navigate(['/new-user', id]);
   }
 
   deleteEntity(id: number) {

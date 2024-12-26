@@ -63,7 +63,7 @@ export class TableTogglableColumnsComponent
   @Input() deleteButtonText: string = 'Delete';
   @Input() detailButtonText: string = 'Detail';
   @Input() maxHeight: number = 650;
-  @Input() columnWidth: string | number = '0 0 15%';
+  @Input() columnWidth: string | number = 'auto';
 
   @Output() onEdit = new EventEmitter<any>();
   @Output() onDelete = new EventEmitter<any>();

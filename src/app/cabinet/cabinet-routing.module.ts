@@ -9,6 +9,7 @@ import { UsersComponent } from './components/users/users.component';
 import { NewCategoryComponent } from './components/add-edit-components/new-category/new-category.component';
 import { NewProductComponent } from './components/add-edit-components/new-product/new-product.component';
 import { NewTableComponent } from './components/add-edit-components/new-table/new-table.component';
+import { NewUserComponent } from './components/add-edit-components/new-user/new-user.component';
 
 const routes: Routes = [
   {
@@ -63,6 +64,14 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersComponent,
+      },
+      {
+        path: 'new-user',
+        component: NewUserComponent,
+      },
+      {
+        path: 'new-user/:id',
+        component: NewUserComponent,
       },
     ],
   },

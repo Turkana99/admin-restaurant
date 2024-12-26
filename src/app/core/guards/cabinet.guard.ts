@@ -10,8 +10,7 @@ export class CabinetGuard implements CanActivate {
 
   canActivate() {
     // Check if user is authenticated
-    const isAuthenticated = this.authService.isAuthenticated();
-    if (!isAuthenticated) {
+    if (!this.authService.isAuthenticated()) {
       // User is not authenticated, navigate to login page
       this.router.navigate(['/login']);
       return false; // Prevent navigation to the requested route

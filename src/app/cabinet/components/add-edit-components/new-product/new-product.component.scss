@@ -58,3 +58,33 @@
     color: red;
   }
 }
+.attachment-wrapper {
+  width: 300px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  img {
+    height: 100%;
+  }
+
+  button {
+    position: absolute;
+    right: 4px;
+    top: 6px;
+    cursor: pointer;
+    border: none;
+    background-color: #e3e3e34f;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+  }
+}

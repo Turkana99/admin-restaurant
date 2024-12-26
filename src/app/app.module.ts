@@ -13,6 +13,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { MessageInterceptor } from './core/interceptors/message-interceptor.service';
 import { QuillModule } from 'ngx-quill';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,12 +28,14 @@ import { QuillModule } from 'ngx-quill';
     HttpClientModule,
     ToastModule,
     MessagesModule,
+    NgxSpinnerModule,
     QuillModule.forRoot(),
   ],
   providers: [
     provideAnimationsAsync(),
     { provide: HTTP_INTERCEPTORS, useClass: MessageInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     MessageService,
   ],
   bootstrap: [AppComponent],

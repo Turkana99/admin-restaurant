@@ -20,7 +20,6 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { QuillModule } from 'ngx-quill';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { MainComponent } from './components/main/main.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { ProductsComponent } from './components/products/products.component';
@@ -32,6 +31,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { NewProductComponent } from './components/add-edit-components/new-product/new-product.component';
 import { NewTableComponent } from './components/add-edit-components/new-table/new-table.component';
+import { NewUserComponent } from './components/add-edit-components/new-user/new-user.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,6 @@ import { NewTableComponent } from './components/add-edit-components/new-table/ne
     SidebarComponent,
     TableTogglableColumnsComponent,
     TableMenuDialogComponent,
-    MainComponent,
     CategoriesComponent,
     OrdersComponent,
     ProductsComponent,
@@ -50,6 +49,7 @@ import { NewTableComponent } from './components/add-edit-components/new-table/ne
     NewCategoryComponent,
     NewProductComponent,
     NewTableComponent,
+    NewUserComponent,
   ],
   imports: [
     CommonModule,

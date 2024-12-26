@@ -116,3 +116,6 @@
   z-index: 1;
   background-color: #fdfbff;
 }
+::ng-deep .mat-mdc-cell{
+  border-bottom-color: #d0d0d0 !important;
+}

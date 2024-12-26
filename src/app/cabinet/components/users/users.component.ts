@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { UsersService } from '../../../core/services/users.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { finalize } from 'rxjs';
+import { BehaviorSubject, finalize, Observable, switchMap, tap } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
+import { UsersService } from '../../../core/services/users.service';
 
 @Component({
   selector: 'app-users',
@@ -10,52 +11,75 @@ import { finalize } from 'rxjs';
   styleUrl: './users.component.scss',
 })
 export class UsersComponent {
-  users: any;
-  showSpinner = false;
-  pageSize = 10;
-  pageIndex = 0;
+  constructor(private dataService: UsersService, private router: Router) {}
 
-  constructor(
-    private userService: UsersService,
-    private router: Router,
-    private messageService: MessageService
-  ) {}
+  rows!: any[];
+
+  private _defaultPage: PageEvent = {
+    previousPageIndex: 0,
+    pageIndex: 0,
+    pageSize: 10,
+    length: 0,
+  };
+
+  data$!: Observable<any>;
+  page$ = new BehaviorSubject<PageEvent>(this._defaultPage);
 
   displayedColumns: any[] = [
     {
-      key: 'name',
-      name: 'Kateqoriya',
+      key: 'firstName',
+      name: 'Ad',
+    },
+    {
+      key: 'lastName',
+      name: 'Soyad',
+    },
+    {
+      key: 'statusType',
+      name: 'Status',
+    },
+    {
+      key: 'username',
+      name: 'İstifadəçi adı',
+    },
+    {
+      key: 'roles',
+      name: 'Rollar',
     },
   ];
+
   ngOnInit(): void {
-    this.getAllInfo(this.pageSize, this.pageIndex);
-  }
-  getAllInfo(pageIndex: number, pageSize: number) {
-    this.userService
-      .getUsers(pageIndex, pageSize + 1)
-      .pipe(
-        finalize(() => {
-          setTimeout(() => {
-            this.showSpinner = false;
-          }, 200);
-        })
+    this.data$ = this.page$.pipe(
+      switchMap((pageEvent) =>
+        this.dataService.getAll(pageEvent.pageIndex, pageEvent.pageSize).pipe(
+          tap((response) => {
+            this.rows = response.items.map((x: any) => {
+              x.roles = x.operationClaims.join(', ');
+              return x;
+            });
+          })
+        )
       )
-      .subscribe(
-        (response) => {
-          this.users = response.items;
-          console.log('categories', this.users);
-        },
-        (error) => {
-          console.error('Error fetching data:', error);
-        }
-      );
+    );
   }
 
-  onPageChange($event: any) {
-    this.getAllInfo($event.pageSize, $event.pageIndex);
+  onPageChange($event: PageEvent) {
+    this.page$.next($event);
   }
 
-  editUsersPageInfo(id: any) {
-    this.router.navigate(['/new-about', id]);
+  editEntity(id: any) {
+    this.router.navigate(['/new-category', id]);
+  }
+
+  deleteEntity(id: number) {
+    this.dataService.delete(id).subscribe({
+      complete: () => {
+        this.reload();
+      },
+    });
+  }
+
+  reload() {
+    this.page$.next(this._defaultPage);
   }
 }

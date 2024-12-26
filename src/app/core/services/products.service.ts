@@ -28,7 +28,7 @@ export class ProductsService {
   }
 
   getById(id: number) {
-    return this.http.get<any>(`${environment.product}/${id}`);
+    return this.http.get<any>(`${environment.product}/get-by-id/${id}`);
   }
 
   delete(id: number) {

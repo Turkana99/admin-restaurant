@@ -27,7 +27,7 @@ export class TablesComponent {
   displayedColumns: any[] = [
     {
       key: 'name',
-      name: 'Kateqoriya',
+      name: 'Ad',
     },
   ];
 

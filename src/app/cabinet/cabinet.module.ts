@@ -22,7 +22,6 @@ import { QuillModule } from 'ngx-quill';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MainComponent } from './components/main/main.component';
 import { CategoriesComponent } from './components/categories/categories.component';
-import { CartsComponent } from './components/carts/carts.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { ProductsComponent } from './components/products/products.component';
 import { TablesComponent } from './components/tables/tables.component';
@@ -44,7 +43,6 @@ import { NewTableComponent } from './components/add-edit-components/new-table/ne
     TableMenuDialogComponent,
     MainComponent,
     CategoriesComponent,
-    CartsComponent,
     OrdersComponent,
     ProductsComponent,
     TablesComponent,

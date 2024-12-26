@@ -8,26 +8,26 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class UsersService {
   constructor(private http: HttpClient) {}
-  getUsers(pageSize: number, pageIndex: number): Observable<any> {
+  getAll(pageSize: number, pageIndex: number): Observable<any> {
     const params = new HttpParams()
       .set('PageSize', pageSize.toString())
       .set('PageIndex', pageIndex.toString());
     return this.http.get<any>(environment.users, { params });
   }
 
-  addUser(request: any): Observable<any> {
+  add(request: any): Observable<any> {
     return this.http.post<any>(environment.users, request);
   }
 
-  editUser(request: any): Observable<any> {
+  edit(request: any): Observable<any> {
     return this.http.put<any>(environment.users, request);
   }
 
-  getUserWithId(id: number) {
+  getById(id: number) {
     return this.http.get<any>(`${environment.users}/${id}`);
   }
 
-  deleteUser(id: number) {
+  delete(id: number) {
     return this.http.delete<any>(`${environment.users}/${id}`);
   }
 

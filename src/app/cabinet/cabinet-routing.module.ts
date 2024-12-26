@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CabinetComponent } from './cabinet.component';
-import { MainComponent } from './components/main/main.component';
 import { CategoriesComponent } from './components/categories/categories.component';
-import { CartsComponent } from './components/carts/carts.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { ProductsComponent } from './components/products/products.component';
 import { TablesComponent } from './components/tables/tables.component';
@@ -33,10 +31,6 @@ const routes: Routes = [
       {
         path: 'new-category/:id',
         component: NewCategoryComponent,
-      },
-      {
-        path: 'carts',
-        component: CartsComponent,
       },
       {
         path: 'orders',

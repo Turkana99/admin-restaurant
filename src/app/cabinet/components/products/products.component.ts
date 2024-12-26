@@ -11,11 +11,6 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrl: './products.component.scss',
 })
 export class ProductsComponent {
-  products: any;
-  showSpinner = false;
-  pageSize = 10;
-  pageIndex = 0;
-
   constructor(private dataService: ProductsService, private router: Router) {}
 
   rows: any;
@@ -33,7 +28,15 @@ export class ProductsComponent {
   displayedColumns: any[] = [
     {
       key: 'name',
+      name: 'Ad',
+    },
+    {
+      key: 'categoryName',
       name: 'Kateqoriya',
+    },
+    {
+      key: 'price',
+      name: 'Qiymət',
     },
   ];
 

@@ -3,7 +3,7 @@ name: LezizCafe Front CI
 on:
   push:
     branches:
-      - master
+      - main
       
 jobs:
   build:
